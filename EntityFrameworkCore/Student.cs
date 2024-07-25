@@ -8,11 +8,10 @@ namespace EntityFrameworkCore
 {
     public class Student
     {
-        public int StudentId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
 
-        public int GradeId { get; set; }
+        public int CurrentGradeId { get; set; }
         public Grade Grade { get; set; }
     }
 }

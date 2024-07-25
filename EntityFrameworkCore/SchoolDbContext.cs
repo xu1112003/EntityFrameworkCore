@@ -9,14 +9,21 @@ namespace EntityFrameworkCore
 {
     public class SchoolDbContext : DbContext
     {
-        public DbSet<Student> Students { get; set; }
-        public DbSet<Grade> Grades { get; set; }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=SchoolDb;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=EFCore-SchoolDB;Trusted_Connection=True");
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Student>()
+                .HasOne<Grade>(s => s.Grade)
+                .WithMany(g => g.Students)
+                .HasForeignKey(s => s.CurrentGradeId);
+        }
+
+        public DbSet<Grade> Grades { get; set; }
+        public DbSet<Student> Students { get; set; }
     }
+
 }
